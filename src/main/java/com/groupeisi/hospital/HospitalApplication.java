@@ -5,6 +5,7 @@ import com.groupeisi.hospital.repository.AppointementRepository;
 import com.groupeisi.hospital.repository.ConsultationRepository;
 import com.groupeisi.hospital.repository.DoctorRepository;
 import com.groupeisi.hospital.repository.PatientRepository;
+import com.groupeisi.hospital.service.IHospital;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,35 +23,35 @@ public class HospitalApplication {
 
     @Bean
     CommandLineRunner start(
+            IHospital hospitalService,
             PatientRepository patientRepository,
             DoctorRepository doctorRepository,
-            AppointementRepository appointementRepository,
-            ConsultationRepository consultationRepository
+            AppointementRepository appointementRepository
             ){
         return args -> {
             //Ajout des patients dans la base de donnee stream.of je lui donne une liste de nom et il me cree ces patients
-            /*Stream.of("awa tall","mamadou sow","lucas sall")
+            Stream.of("awa tall","mamadou sow","lucas sall")
                     .forEach(name->{
                         Patient patient = new Patient();
                         patient.setName(name);
                         patient.setBirthdate(new Date());
-                        patientRepository.save(patient);
+                        hospitalService.savePatient(patient);
                     });
-*/
+
             //Ajout des docteurs dans la base de donnee stream.of je lui donne une liste de nom et il me cree ces docteurs
 
-            /*Stream.of("Dr Diagne","Dr Samb")
+            Stream.of("Dr Diagne","Dr Samb")
                     .forEach(name->{
                         Doctor doctor = new Doctor();
                         doctor.setName(name);
                         doctor.setEmail(name+"@dkrEmergency.org");
                         doctor.setSpeciality(Math.random()>0.5?"Dentiste":"infirmier");
-                        doctorRepository.save(doctor);
-                    });*/
+                        hospitalService.saveDoctor(doctor);
+                    });
 
             //Patient patient1 = patientRepository.findById(1L).orElse(null);
 
-            /*Patient patient = patientRepository.findByName("khary seye");
+            Patient patient = patientRepository.findByName("khary seye");
             Doctor doctor = doctorRepository.findByName("Dr Diagne");
 
             Appointement appointement = new Appointement();
@@ -58,14 +59,14 @@ public class HospitalApplication {
             appointement.setStatus(Status.PENDING);
             appointement.setPatient(patient);
             appointement.setDoctor(doctor);
-            appointementRepository.save(appointement);*/
+            hospitalService.saveAppointement(appointement);
 
-            Appointement appointement = appointementRepository.findById(1L).get();
+            Appointement appointement1 = appointementRepository.findById(1L).get();
             Consultation consultation = new Consultation();
             consultation.setDate_consultation(new Date());
             consultation.setRapport("Rapport RDC n°034");
             consultation.setAppointement(appointement);
-            consultationRepository.save(consultation);
+            hospitalService.saveConsultation(consultation);
         };
     }
 
