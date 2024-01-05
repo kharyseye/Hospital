@@ -30,7 +30,7 @@ public class HospitalApplication {
             ){
         return args -> {
             //Ajout des patients dans la base de donnee stream.of je lui donne une liste de nom et il me cree ces patients
-            Stream.of("awa tall","mamadou sow","lucas sall")
+            Stream.of("Micheal ange","Birdy Senghor","China Desperes")
                     .forEach(name->{
                         Patient patient = new Patient();
                         patient.setName(name);
@@ -40,19 +40,19 @@ public class HospitalApplication {
 
             //Ajout des docteurs dans la base de donnee stream.of je lui donne une liste de nom et il me cree ces docteurs
 
-            Stream.of("Dr Diagne","Dr Samb")
+            Stream.of("Mme Gnigue","Mlle Sow")
                     .forEach(name->{
                         Doctor doctor = new Doctor();
                         doctor.setName(name);
                         doctor.setEmail(name+"@dkrEmergency.org");
-                        doctor.setSpeciality(Math.random()>0.5?"Dentiste":"infirmier");
+                        doctor.setSpeciality(Math.random()>0.5?"Aide Soignante":"Sage Femme");
                         hospitalService.saveDoctor(doctor);
                     });
 
             //Patient patient1 = patientRepository.findById(1L).orElse(null);
 
-            Patient patient = patientRepository.findByName("khary seye");
-            Doctor doctor = doctorRepository.findByName("Dr Diagne");
+            Patient patient = patientRepository.findByName("Micheal ange");
+            Doctor doctor = doctorRepository.findByName("Mlle Sow");
 
             Appointement appointement = new Appointement();
             appointement.setDate(new Date());
@@ -64,7 +64,7 @@ public class HospitalApplication {
             Appointement appointement1 = appointementRepository.findById(1L).get();
             Consultation consultation = new Consultation();
             consultation.setDate_consultation(new Date());
-            consultation.setRapport("Rapport RDC n°034");
+            consultation.setRapport("Rapport RDC n°036");
             consultation.setAppointement(appointement);
             hospitalService.saveConsultation(consultation);
         };
